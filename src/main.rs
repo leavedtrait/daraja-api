@@ -1,7 +1,9 @@
 use tide::Request;
 use tide::prelude::*;
+use tide_tracing::TraceMiddleware;
 use serde::Deserialize;
 
+extern crate tracing;
 
 use surf::{get,client,Error};
 use base64::encode;
@@ -34,7 +36,15 @@ async fn get_mpesa_token() -> Result<AuthToken, Error> {
 
 #[async_std::main]
 async fn main() -> tide::Result<()> {
+    tracing_subscriber::fmt()
+        .with_target(false)
+        .compact()
+        .init();
+
     let mut app = tide::new();
+
+    app.with(TraceMiddleware::new());
+
     app.at("/token").get(get_token);
     app.listen("127.0.0.1:8080").await?;
     Ok(())
