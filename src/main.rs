@@ -20,7 +20,7 @@ async fn get_mpesa_token() -> Result<AuthToken, Error> {
     );
 
     let client = surf::client();
-    let req = get(url).header("Authorization", auth_header);
+    let req  = get(url).header("Authorization", auth_header);
     let mut res = client.send(req).await?;
  
     
