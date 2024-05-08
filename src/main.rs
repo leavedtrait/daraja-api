@@ -1,4 +1,3 @@
-use tide::prelude::*;
 use tide::Server;
 
 mod common;
@@ -8,11 +7,10 @@ mod router;
 
 #[async_std::main]
 async fn main() -> tide::Result<()> {
-    
     let mut app = tide::new();
 
     // logging functinality
-    // for developers 
+    // for developers
     app.with(driftwood::DevLogger);
     //for deployed applications
     //app.with(driftwood::ApacheCombinedLogger);
