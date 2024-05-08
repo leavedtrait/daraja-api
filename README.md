@@ -1,4 +1,4 @@
-# Wrapper around Safaricoms Daraja Api intergrating 
+# Wrapper around Safaricoms Daraja Api
 
 ## Services Enabled include 
 ### Mpesa Express (Stk push)

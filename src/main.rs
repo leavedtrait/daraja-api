@@ -1,38 +1,33 @@
 use tide::prelude::*;
-use tide_tracing::TraceMiddleware;
-use serde::Deserialize;
+use tide::Server;
 
-extern crate tracing;
-
-
+mod common;
+mod handlers;
 mod models;
 mod router;
-mod handlers;
-mod common;
 
 #[async_std::main]
 async fn main() -> tide::Result<()> {
-    tracing_subscriber::fmt()
-        .with_target(false)
-        .compact()
-        .init();
-
+    
     let mut app = tide::new();
-     
-    Ok(run().await?)
+
+    // logging functinality
+    // for developers 
+    app.with(driftwood::DevLogger);
+    //for deployed applications
+    //app.with(driftwood::ApacheCombinedLogger);
+
+    Ok(run(&mut app).await?)
 }
 
-async fn run()-> tide::Result<()>{
-    let mut app = tide::new();
+/// Run function this starts the server
+async fn run(app: &mut Server<()>) -> tide::Result<()> {
+    router::setup_routes(app);
 
-    app.with(TraceMiddleware::new());
+    // same as '''app.listen("127.0.0.1:8080").await?;'''  but
+    <Server<()> as Clone>::clone(&app)
+        .listen("127.0.0.1:8080")
+        .await?;
 
-    router::setup_routes(&mut app);
-
-    app.listen("127.0.0.1:8080").await?;
     Ok(())
-
-
 }
-
-
