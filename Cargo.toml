@@ -12,7 +12,8 @@ serde = { version = "1.0", features = ["derive"] }
 base64 = "0.22.1"
 serde_json = { version = "1.0.116", features = ["std"] }
 #tokio = { version = "1.37.0", features = ["full"] }
-surf = "2.3.2"
+#surf = "2.3.2" #use ureq instead surf has longr build time as it uses curl-sys (using curl under the hood)
 
 driftwood = "0.0.7"
+ureq = { version = "2.9.7", features = ["json"] }
 
