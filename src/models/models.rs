@@ -33,13 +33,11 @@ pub struct StkResponse {
     pub CustomerMessage: String,
 }
 
-
-#[derive(Debug,Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct StkQueryParams {
     pub phone_number: i64,
     pub amount: i32,
 }
-
 
 #[allow(non_snake_case)]
 #[derive(Serialize, Deserialize, Debug)]
